@@ -1,0 +1,41 @@
+diff --git a/node_modules/ra-ui-materialui/esm/field/FileField.js b/node_modules/ra-ui-materialui/esm/field/FileField.js
+index 5971fd4..c25f8b2 100644
+--- a/node_modules/ra-ui-materialui/esm/field/FileField.js
++++ b/node_modules/ra-ui-materialui/esm/field/FileField.js
+@@ -53,12 +53,12 @@ var FileField = function (props) {
+             var fileTitleValue = get(file, title) || title;
+             var srcValue = get(file, src) || title;
+             return (React.createElement("li", { key: index },
+-                React.createElement("a", { href: srcValue, title: fileTitleValue, target: target, download: download, ping: ping, rel: rel }, fileTitleValue)));
++                React.createElement("a", { href: srcValue, title: fileTitleValue, target: target, download: fileTitleValue, ping: ping, rel: rel }, fileTitleValue)));
+         })));
+     }
+     var titleValue = get(record, title) || title;
+     return (React.createElement("div", __assign({ className: classnames(classes.root, className) }, sanitizeRestProps(rest)),
+-        React.createElement("a", { href: sourceValue, title: titleValue, target: target, download: download, ping: ping, rel: rel }, titleValue)));
++        React.createElement("a", { href: sourceValue, title: titleValue, target: target, download: titleValue, ping: ping, rel: rel }, titleValue)));
+ };
+ FileField.defaultProps = {
+     addLabel: true,
+diff --git a/node_modules/ra-ui-materialui/src/field/FileField.tsx b/node_modules/ra-ui-materialui/src/field/FileField.tsx
+index b0050e7..8491e18 100644
+--- a/node_modules/ra-ui-materialui/src/field/FileField.tsx
++++ b/node_modules/ra-ui-materialui/src/field/FileField.tsx
+@@ -74,7 +74,7 @@ const FileField: FC<FileFieldProps> = props => {
+                                 href={srcValue}
+                                 title={fileTitleValue}
+                                 target={target}
+-                                download={download}
++                                download={fileTitleValue}
+                                 ping={ping}
+                                 rel={rel}
+                             >
+@@ -98,7 +98,7 @@ const FileField: FC<FileFieldProps> = props => {
+                 href={sourceValue}
+                 title={titleValue}
+                 target={target}
+-                download={download}
++                download={titleValue}
+                 ping={ping}
+                 rel={rel}
+             >

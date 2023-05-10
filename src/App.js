@@ -1,18 +1,18 @@
 import React from 'react';
 import { Admin, Resource } from 'react-admin';
-import dataProvider from './dataProvider';
-import NotesList from './components/NotesList';
-import NotesEdit from './components/NotesEdit';
-import NotesCreate from './components/NotesCreate';
+import myDataProvider from './dataProvider';
+import FilesList from './components/FilesList';
+import FilesEdit from './components/FilesEdit';
+import FilesCreate from './components/FilesCreate';
 
 function App() {
   return (
-    <Admin dataProvider={dataProvider}>
+    <Admin dataProvider={myDataProvider}>
       <Resource
-        name="notes"
-        list={NotesList}
-        edit={NotesEdit}
-        create={NotesCreate}
+        name="files"
+        list={FilesList}
+        edit={FilesEdit}
+        create={FilesCreate}
       />
     </Admin>
   );

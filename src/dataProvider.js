@@ -4,7 +4,7 @@ import { stringify } from 'query-string';
 const apiUrl = 'http://localhost:3000/api';
 const httpClient = fetchUtils.fetchJson;
 
-export default {
+const dataProvider = {
   getList: (resource, params) => {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
@@ -76,7 +76,10 @@ export default {
       body: JSON.stringify(params.data),
     }).then(({ json }) => ({
       data: { ...params.data, id: json._id },
-    })),
+    })).then((x) => {
+      console.log(x);
+      return x
+    }),
 
   delete: (resource, params) =>
     httpClient(`${apiUrl}/${resource}/${params.id}`, {
@@ -97,3 +100,62 @@ export default {
     }).then(({ json }) => ({ data: json }));
   },
 };
+
+const myDataProvider = {
+  ...dataProvider,
+  create: (resource, params) => {
+    // if (resource !== 'posts') {
+    //     // fallback to the default implementation
+    //     return dataProvider.create(resource, params);
+    // }
+
+    /**
+     * For posts update only, convert uploaded image in base 64 and attach it to
+     * the `file` sent property, with `src` and `title` attributes.
+     */
+    
+    // Freshly dropped files are File objects and must be converted to base64 strings
+    const newFile = params.data.file
+    console.log("resultin:" + convertFileToBase64(newFile))
+    return convertFileToBase64(newFile)
+        .then((x) => {
+          console.log(x);
+          return x
+        })
+        .then(base64File => ({
+          src: base64File,
+          title: `${params.data.file.title}`
+        })
+        )
+        .then(transformedNewFile =>
+            dataProvider.create(resource, {
+                data: {
+                    ...params.data,
+                    file: {
+                        ...transformedNewFile
+                    },
+                },
+            })
+        )
+  }
+}
+/**
+* Convert a `File` object returned by the upload input into a base 64 string.
+* That's not the most optimized way to store images in production, but it's
+* enough to illustrate the idea of data provider decoration.
+*/
+const convertFileToBase64 = file =>
+  new Promise((resolve, reject) => {
+      console.log("rawfile:" + file.rawFile)
+      console.log("file?:" + (file.rawFile instanceof File))
+      console.log("blob?:" + (file.rawFile instanceof Blob))
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file.rawFile);
+      console.log("result:"+reader.result)
+      return reader.result
+  });
+
+export default myDataProvider;
