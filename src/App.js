@@ -11,7 +11,6 @@ function App() {
       <Resource
         name="files"
         list={FilesList}
-        edit={FilesEdit}
         create={FilesCreate}
       />
     </Admin>
