@@ -1,7 +1,7 @@
 {
   "name": "react-admin-notes-frontend",
   "version": "0.1.0",
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:4200",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -15,6 +15,7 @@
     "react-dropzone": "^14.2.3",
     "react-scripts": "^4.0.3"
   },
+  "homepage": "/fileserver/",
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
