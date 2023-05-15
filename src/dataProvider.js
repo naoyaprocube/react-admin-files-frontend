@@ -1,7 +1,7 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
-const apiUrl = 'https://localhost:19444/fileserver/api';
+const apiUrl = 'http://localhost:3000/fileserver/api';
 const httpClient = fetchUtils.fetchJson;
 
 const dataProvider = {
